@@ -140,6 +140,23 @@ It combines three patterns:
    Use <generated-skill-name> to identify reviewer risks in this study idea.
    ```
 
+### Concrete Command Example
+
+In a skill-enabled client, a complete workflow can look like this:
+
+```text
+Step 1: Install this skill
+git@github.com:luckylykkk/papers-to-skill.git
+
+Step 2: Generate a domain expert skill from a local literature folder
+/papers-to-skill Generate a domain research expert skill from <your-literature-folder>
+
+Step 3: Use the generated domain expert skill
+/领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
+```
+
+Replace `/领域研究专家skill` with the actual skill name generated from your corpus.
+
 ### What Gets Distilled
 
 The generated expert skill is built from six evidence lanes:
@@ -252,6 +269,23 @@ Every substantive answer from a generated expert skill should include paper refe
    使用 <generated-skill-name>，帮我查找某个参数或统计方法的参考。
    使用 <generated-skill-name>，帮我判断这个研究想法可能会被审稿人质疑的地方。
    ```
+
+### 完整使用示例
+
+如果你的客户端支持 skill 安装和 slash-command 调用，可以按下面三步使用：
+
+```text
+第一步：安装这个 skill
+git@github.com:luckylykkk/papers-to-skill.git
+
+第二步：基于本地文献目录生成领域研究专家 skill
+/papers-to-skill 基于我提供的目录<your-literature-folder>生成领域研究专家skill
+
+第三步：使用生成的领域研究专家 skill 进行前沿知识问答
+/领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
+```
+
+其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`/领域研究专家skill` 需要替换为实际生成出来的 skill 名称。
 
 ### 它会提取什么
 

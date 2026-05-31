@@ -107,12 +107,65 @@ Then the generated skill was used for domain-specific questions:
 Example answer behavior:
 
 ```text
-For coronary calcium score regression, use log(CACS + 1) for skewed continuous CACS,
-consider CACS > 400 as a binary sensitivity analysis, and adjust for clinical risk factors,
-CAD-RADS, plaque burden, and PCAT/FAI when aligned with the research endpoint.
+For coronary calcium score regression, CACS can be treated as a continuous outcome,
+categorical outcome, or predictor. Use log(CACS + 1) for skewed continuous CACS,
+consider CACS > 400 as a binary sensitivity analysis, and adjust for clinical risk
+factors, CAD-RADS, plaque burden, and PCAT/FAI when aligned with the research endpoint.
 
 The answer includes paper-key references from the generated corpus.
 ```
+
+### Full Q&A Example: Tables in Prognostic Model Papers
+
+User question:
+
+```text
+/diabetes-pcat-ccta What tables do these papers usually include?
+```
+
+Generated domain expert skill answer:
+
+I used `diabetes-pcat-ccta` to check these KM/ROC prognostic model papers. They usually include **3-5 main tables plus several supplementary tables**.
+
+Common main table structure:
+
+| Table | Content | Purpose |
+|---|---|---|
+| Table 1 | Baseline characteristics | Compare age, sex, BMI, diabetes, hypertension, lipids, CACS, CAD-RADS, FAI/PCAT, and related variables by MACE / no MACE or training / validation set |
+| Table 2 | Imaging or grouping characteristics | Compare high/low FAI, high/low PCAT attenuation, OCT/plaque features, HRPC, or CACS strata |
+| Table 3 | Univariate Cox / logistic regression | Identify candidate variables associated with MACE, vulnerable plaque, or endpoint events |
+| Table 4 | Multivariable Cox regression models | Test whether FAI/PCAT independently predicts outcomes after adjustment for age, sex, risk factors, CAD-RADS, and CACS |
+| Table 5 | Prediction model performance | Report AUC, C-index, NRI, IDI, calibration, and DCA; compare whether Model 1/2/3/4 improves prediction |
+
+How these papers handled tables:
+
+- `zhang-2024-peri-coronary-fat-attenuation-in`: 3 main tables. Table 1 baseline MACE / non-MACE; Table 2 FAI/HRPC grouping risk; Table 3 incremental model value with C-statistic, NRI, and IDI.
+- `wen-2023-lack-of-incremental-prognostic-v`: 3 main tables. Table 1 baseline and imaging characteristics; Table 2 univariate Cox; Table 3 multivariable Cox. The paper focuses on the limited incremental value of PCAT over CAD-RADS.
+- `hu-2025-prognostic-value-of-pericoronary`: 4 main tables. Table 1 MACE / no MACE baseline and imaging; Table 2 high/low PCAT group characteristics; Table 3 Cox regression; Table 4 multi-model prediction performance with C-index and NRI.
+- `shang-2025-pericoronary-adipose-tissue-radi`: 3 main tables. Table 1 ACS patient baseline; Table 2 multivariable Cox model; Table 3 MACE prediction model performance with training, internal test, and external test C-index.
+- `yang-2025-peri-coronary-adipose-tissue-att`: 2 main text tables plus multiple supplementary tables. Table 1 baseline; Table 2 OCT plaque features; supplementary tables include logistic/Cox models, MACE outcomes, and ROC cutoffs.
+- `wang-2025-prognostic-value-of-lesion-speci`: 4 main tables. Table 1 MACE / no MACE baseline; Table 2 Cox regression; Table 3 risk stratification model; Table 4 incremental prediction value of Cox models.
+
+If you are writing a CACS/FAI/MACE paper, I would recommend:
+
+| Table | Suggested content |
+|---|---|
+| Table 1 | MACE vs non-MACE baseline table |
+| Table 2 | CCTA/imaging characteristics: CACS, CAD-RADS, plaque burden, HRPC, FAI/PCAT |
+| Table 3 | Univariate Cox regression |
+| Table 4 | Multivariable Cox regression, organized as Model 1-4 |
+| Table 5 | Prediction performance comparison: AUC/C-index, NRI, IDI, DCA |
+
+Supplementary tables can include cutoff sources, subgroup analyses, sensitivity analyses, ICC/reproducibility, and missing-data handling.
+
+References:
+
+- `zhang-2024-peri-coronary-fat-attenuation-in`
+- `wen-2023-lack-of-incremental-prognostic-v`
+- `hu-2025-prognostic-value-of-pericoronary`
+- `shang-2025-pericoronary-adipose-tissue-radi`
+- `yang-2025-peri-coronary-adipose-tissue-att`
+- `wang-2025-prognostic-value-of-lesion-speci`
 
 ## Not RAG, Not A One-Off Summary
 
@@ -136,10 +189,11 @@ General AI is often strong at reasoning, but weak answers in frontier academic f
 
 - research idea evaluation
 - study design
-- parameter and statistical references
+- parameter, threshold, and statistical references
 - method selection
+- imaging, clinical, or experimental measurement method checks
 - evidence lookup
-- reviewer-risk checks
+- reviewer-risk and boundary checks
 - domain-specific Q&A with citations
 
 ## Architecture
@@ -204,22 +258,6 @@ Every generated skill should state what it cannot do:
 - it should cite the source papers for substantive claims
 
 ## 中文说明
-
-### 为什么需要这个工具
-
-通用 AI 的推理能力往往很强，但在前沿学术研究和真实垂直场景里，回答质量常常受限于缺少领域前置知识。问题通常不是模型“不够聪明”，而是它未必掌握你手头这批最新、最相关、最贴近场景的论文。
-
-`papers-to-skill` 的目标是把用户自己的文献目录打包成一个可复用的领域研究专家 Skill。之后再提问时，回答会尽量结合这批文献中的设计、证据、方法、参数和引用来源，而不是只依赖通用训练记忆。
-
-### 适用场景
-
-- 研究想法评估
-- 研究设计参考
-- 参数、阈值和统计方法参考
-- 影像、临床或实验指标的方法学查证
-- 文献证据定位
-- 审稿风险和研究边界检查
-- 带文献来源的专业问答
 
 ### 快速安装
 
@@ -377,6 +415,35 @@ References:
 - **普通文献总结** 主要一次性概括论文。
 - **生成的 Skill** 会把文献库变成一个可复用、有边界、有引用规则的领域研究助手。
 
+### 为什么需要这个工具
+
+通用 AI 的推理能力往往很强，但在前沿学术研究和真实垂直场景里，回答质量常常受限于缺少领域前置知识。问题通常不是模型“不够聪明”，而是它未必掌握你手头这批最新、最相关、最贴近场景的论文。
+
+`papers-to-skill` 的目标是把用户自己的文献目录打包成一个可复用的领域研究专家 Skill。之后再提问时，回答会尽量结合这批文献中的设计、证据、方法、参数和引用来源，而不是只依赖通用训练记忆。
+
+### 适用场景
+
+- 研究想法评估
+- 研究设计参考
+- 参数、阈值和统计方法参考
+- 方法选择
+- 影像、临床或实验指标的方法学查证
+- 文献证据定位
+- 审稿风险和研究边界检查
+- 带文献来源的专业问答
+
+### 架构
+
+架构图由 Image2 生成：
+
+![papers-to-skill architecture](assets/papers-to-skill-architecture.png)
+
+### 使用流程
+
+使用流程图由 Image2 生成：
+
+![papers-to-skill usage workflow](assets/papers-to-skill-workflow.png)
+
 ### 它会提取什么
 
 | 通道 | 提取内容 |
@@ -387,6 +454,28 @@ References:
 | 矛盾与边界 | 阴性结果、冲突发现、适用边界 |
 | 应用场景 | 文献如何改变研究决策或 Agent 行为 |
 | 阅读地图 | 后续回答问题时应该查哪篇文献、哪个部分 |
+
+### 输出结构
+
+```text
+<skill-name>/
++-- SKILL.md
++-- references/
+    +-- research/
+        +-- 01-claims.md
+        +-- 02-methods.md
+        +-- 03-concepts.md
+        +-- 04-contradictions.md
+        +-- 05-applications.md
+        +-- 06-reading-map.md
+    +-- papers.md
+    +-- evidence-table.md
+    +-- concepts.md
+    +-- methods.md
+    +-- contradictions.md
+    +-- reading-map.md
+    +-- validation-report.md
+```
 
 ### 引用规则
 

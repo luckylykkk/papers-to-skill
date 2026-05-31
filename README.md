@@ -297,6 +297,58 @@ Every generated skill should state what it cannot do:
 回答会附带来自生成文献库的 paper-key 引用来源。
 ```
 
+#### 完整问答示例：预后模型文章通常做哪些 Table
+
+用户提问：
+
+```text
+/diabetes-pcat-ccta 这些文章通常做了哪几个table
+```
+
+生成的领域专家 skill 回答：
+
+我用 `diabetes-pcat-ccta` 查了这几篇 KM/ROC 预后模型文章。它们通常是 **3-5 个主表 + 若干补充表**。
+
+最常见主表结构：
+
+| 表 | 内容 | 作用 |
+|---|---|---|
+| Table 1 | 基线特征 | 按 MACE / no MACE，或训练集 / 验证集，比较年龄、性别、BMI、糖尿病、高血压、血脂、CACS、CAD-RADS、FAI/PCAT 等 |
+| Table 2 | 影像学或分组特征 | 高/低 FAI，高/低 PCAT attenuation，或 OCT/斑块特征、HRPC、CACS 分层 |
+| Table 3 | 单因素 Cox / logistic 回归 | 找出和 MACE、易损斑块、终点事件相关的候选变量 |
+| Table 4 | 多因素 Cox 回归模型 | 校正年龄、性别、危险因素、CAD-RADS、CACS 后，看 FAI/PCAT 是否独立预测 |
+| Table 5 | 预测模型性能 | AUC、C-index、NRI、IDI、校准、DCA，比较 Model 1/2/3/4 是否提升预测能力 |
+
+这几篇文章实际怎么做：
+
+- `zhang-2024-peri-coronary-fat-attenuation-in`：3 个主表。Table 1 基线 MACE / non-MACE；Table 2 FAI/HRPC 分组风险；Table 3 模型增量价值，含 C-statistic、NRI、IDI。
+- `wen-2023-lack-of-incremental-prognostic-v`：3 个主表。Table 1 基线和影像特征；Table 2 单因素 Cox；Table 3 多因素 Cox。它重点证明 PCAT 对 CAD-RADS 的增量价值有限。
+- `hu-2025-prognostic-value-of-pericoronary`：4 个主表。Table 1 MACE / no MACE 基线和影像；Table 2 高低 PCAT 组特征；Table 3 Cox 回归；Table 4 多模型预测性能，含 C-index、NRI。
+- `shang-2025-pericoronary-adipose-tissue-radi`：3 个主表。Table 1 ACS 患者基线；Table 2 多变量 Cox 模型；Table 3 MACE 预测模型性能，训练集、内部测试集、外部测试集 C-index。
+- `yang-2025-peri-coronary-adipose-tissue-att`：正文 2 个主表 + 多个补充表。Table 1 基线；Table 2 OCT 斑块特征；补充表放 logistic/Cox、MACE 结局、ROC cutoff。
+- `wang-2025-prognostic-value-of-lesion-speci`：4 个主表。Table 1 MACE / no MACE 基线；Table 2 Cox 回归；Table 3 风险分层模型；Table 4 Cox 模型增量预测价值。
+
+如果你自己写 CACS/FAI/MACE 文章，我建议这样排：
+
+| 表 | 建议内容 |
+|---|---|
+| Table 1 | MACE vs non-MACE 基线表 |
+| Table 2 | CCTA/影像特征表：CACS、CAD-RADS、斑块负荷、HRPC、FAI/PCAT |
+| Table 3 | 单因素 Cox 回归 |
+| Table 4 | 多因素 Cox 回归，分 Model 1-4 |
+| Table 5 | 预测性能比较：AUC/C-index、NRI、IDI、DCA |
+
+补充表可以放：cutoff 来源、亚组分析、敏感性分析、ICC/重复性、缺失值处理。
+
+References:
+
+- `zhang-2024-peri-coronary-fat-attenuation-in`
+- `wen-2023-lack-of-incremental-prognostic-v`
+- `hu-2025-prognostic-value-of-pericoronary`
+- `shang-2025-pericoronary-adipose-tissue-radi`
+- `yang-2025-peri-coronary-adipose-tissue-att`
+- `wang-2025-prognostic-value-of-lesion-speci`
+
 ### 不是 RAG，也不是普通文献总结
 
 `papers-to-skill` 不是简单建立一个 RAG 检索库，也不是生成一份一次性的文献综述。

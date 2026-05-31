@@ -1,0 +1,11 @@
+{
+  "platform": "hermes",
+  "name": "papers-to-skill",
+  "version": "0.1.0",
+  "category": "research",
+  "entry": "../../skills/papers-to-skill/SKILL.md",
+  "install": {
+    "npm": "npm install -g papers-to-skill && papers-to-skill install hermes",
+    "defaultTarget": "~/.hermes/skills/research/papers-to-skill"
+  }
+}

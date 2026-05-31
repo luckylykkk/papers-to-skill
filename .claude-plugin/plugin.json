@@ -1,0 +1,9 @@
+{
+  "name": "papers-to-skill",
+  "version": "0.1.0",
+  "description": "Generate citation-grounded domain research expert skills from folders of academic PDFs, BibTeX files, and literature notes.",
+  "author": {
+    "name": "luckylykkk"
+  },
+  "homepage": "https://github.com/luckylykkk/papers-to-skill"
+}

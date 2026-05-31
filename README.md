@@ -10,6 +10,9 @@
 `papers-to-skill` packages the papers and research materials in a user-provided folder into a reusable expert skill. The generated skill can then answer field-specific research questions with citations from the supplied corpus.
 
 - [Quick Install](#quick-install)
+- [Install From npm](#install-from-npm)
+- [Claude Code Plugin](#claude-code-plugin)
+- [Cross-Platform Support](#cross-platform-support)
 - [Three-Step Use](#three-step-use)
 - [Real Anonymized Case Study](#real-anonymized-case-study)
 - [Not RAG, Not A One-Off Summary](#not-rag-not-a-one-off-summary)
@@ -30,6 +33,94 @@ Install this skill: git@github.com:luckylykkk/papers-to-skill.git
 ```text
 安装这个 Skill：git@github.com:luckylykkk/papers-to-skill.git
 ```
+
+## Install From npm
+
+`papers-to-skill` is packaged as an npm-distributable skill installer.
+
+Install through npm from GitHub immediately:
+
+```bash
+npm install -g github:luckylykkk/papers-to-skill
+papers-to-skill paths
+```
+
+After the package is published to the npm registry:
+
+```bash
+npm install -g papers-to-skill
+papers-to-skill paths
+```
+
+Install the skill into common local runtimes:
+
+```bash
+papers-to-skill install codex
+papers-to-skill install hermes
+papers-to-skill install openclaw --dest <openclaw-skills-dir>/papers-to-skill
+```
+
+For any `SKILL.md`-compatible runtime:
+
+```bash
+papers-to-skill install skill-dir --dest <agent-skills-dir>/papers-to-skill
+```
+
+Current publishing note: the npm package name `papers-to-skill` is available on the public npm registry, but registry publishing requires npm login:
+
+```bash
+npm adduser --registry https://registry.npmjs.org/
+npm publish --registry https://registry.npmjs.org/
+```
+
+## Claude Code Plugin
+
+This repository is also structured as a Claude Code plugin:
+
+```bash
+claude plugin validate .
+```
+
+Local marketplace installation from a cloned repository:
+
+```bash
+claude plugin marketplace add ./marketplace
+claude plugin install papers-to-skill@papers-to-skill-marketplace
+```
+
+After the plugin is accepted into a public Claude Code marketplace, users should be able to install it with:
+
+```bash
+claude plugin install papers-to-skill
+```
+
+Claude Code loads the skill from:
+
+```text
+skills/papers-to-skill/SKILL.md
+```
+
+## Cross-Platform Support
+
+The canonical portable skill lives at:
+
+```text
+skills/papers-to-skill/
++-- SKILL.md
++-- references/
++-- scripts/
+```
+
+Additional manifests are included for platform adapters:
+
+| Platform | Support path |
+|---|---|
+| Codex | `papers-to-skill install codex` copies the skill to the local Codex skill directory |
+| Claude Code | `.claude-plugin/plugin.json` plus `skills/papers-to-skill/SKILL.md` |
+| Claude Code marketplace | `marketplace/.claude-plugin/marketplace.json` |
+| Hermes | `papers-to-skill install hermes` copies the skill under `~/.hermes/skills/research/` |
+| OpenClaw | use `OPENCLAW_SKILLS_DIR` or `--dest` to copy the skill into the platform skill directory |
+| Other runtimes | use `papers-to-skill install skill-dir --dest <agent-skills-dir>/papers-to-skill` |
 
 ## Three-Step Use
 
@@ -258,6 +349,94 @@ Every generated skill should state what it cannot do:
 - it should cite the source papers for substantive claims
 
 ## 中文说明
+
+### npm 安装
+
+`papers-to-skill` 已经整理成可以通过 npm 分发的 Skill 安装包。
+
+现在可以直接通过 npm 从 GitHub 安装：
+
+```bash
+npm install -g github:luckylykkk/papers-to-skill
+papers-to-skill paths
+```
+
+正式发布到 npm registry 后，可以这样安装：
+
+```bash
+npm install -g papers-to-skill
+papers-to-skill paths
+```
+
+安装到常见本地运行环境：
+
+```bash
+papers-to-skill install codex
+papers-to-skill install hermes
+papers-to-skill install openclaw --dest <openclaw-skills-dir>/papers-to-skill
+```
+
+对于任何支持 `SKILL.md` 目录的 Agent 平台，可以使用通用安装方式：
+
+```bash
+papers-to-skill install skill-dir --dest <agent-skills-dir>/papers-to-skill
+```
+
+当前发布状态：npm registry 上的包名 `papers-to-skill` 目前可用；正式发布需要先登录官方 npm registry：
+
+```bash
+npm adduser --registry https://registry.npmjs.org/
+npm publish --registry https://registry.npmjs.org/
+```
+
+### Claude Code 插件
+
+这个仓库现在也是一个 Claude Code 插件仓库：
+
+```bash
+claude plugin validate .
+```
+
+从本地克隆仓库使用 marketplace manifest 安装：
+
+```bash
+claude plugin marketplace add ./marketplace
+claude plugin install papers-to-skill@papers-to-skill-marketplace
+```
+
+如果后续被公开 Claude Code marketplace 收录，用户可以直接使用：
+
+```bash
+claude plugin install papers-to-skill
+```
+
+Claude Code 会从下面的位置加载 Skill：
+
+```text
+skills/papers-to-skill/SKILL.md
+```
+
+### 跨平台支持
+
+可移植的标准 Skill 目录位于：
+
+```text
+skills/papers-to-skill/
++-- SKILL.md
++-- references/
++-- scripts/
+```
+
+仓库中已经加入平台适配 manifest：
+
+| 平台 | 支持方式 |
+|---|---|
+| Codex | `papers-to-skill install codex` 会复制到本地 Codex skill 目录 |
+| Claude Code | 使用 `.claude-plugin/plugin.json` 和 `skills/papers-to-skill/SKILL.md` |
+| Claude Code marketplace | 使用 `marketplace/.claude-plugin/marketplace.json` |
+| Hermes | `papers-to-skill install hermes` 会复制到 `~/.hermes/skills/research/` |
+| OpenClaw | 使用 `OPENCLAW_SKILLS_DIR` 或 `--dest` 指定平台 Skill 目录 |
+| 其他运行环境 | 使用 `papers-to-skill install skill-dir --dest <agent-skills-dir>/papers-to-skill` |
 
 ### 快速安装
 

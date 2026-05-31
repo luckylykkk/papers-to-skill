@@ -1,0 +1,26 @@
+{
+  "schema": "agent-skill-package-v1",
+  "name": "papers-to-skill",
+  "version": "0.1.0",
+  "description": "Generate citation-grounded domain research expert skills from folders of academic PDFs, BibTeX files, and literature notes.",
+  "entry": "skills/papers-to-skill/SKILL.md",
+  "type": "agent-skill",
+  "resources": [
+    "skills/papers-to-skill/references/**",
+    "skills/papers-to-skill/scripts/**"
+  ],
+  "supportedPlatforms": [
+    "Codex",
+    "Claude Code",
+    "Hermes",
+    "OpenClaw",
+    "SKILL.md-compatible agent runtimes"
+  ],
+  "commands": [
+    {
+      "name": "papers-to-skill",
+      "entry": "skills/papers-to-skill/SKILL.md",
+      "argumentHint": "<pdf-folder-or-notes> [domain-skill-name]"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "papers-to-skill",
+  "version": "0.1.0",
+  "description": "Generate citation-grounded domain research expert skills from folders of academic PDFs, BibTeX files, and literature notes.",
+  "homepage": "https://github.com/luckylykkk/papers-to-skill",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckylykkk/papers-to-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luckylykkk/papers-to-skill/issues"
+  },
+  "author": "luckylykkk",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "papers-to-skill": "bin/papers-to-skill.js"
+  },
+  "files": [
+    ".claude-plugin/",
+    "assets/",
+    "bin/",
+    "marketplace/",
+    "platforms/",
+    "references/",
+    "scripts/",
+    "skills/",
+    "README.md",
+    "SKILL.md",
+    "LICENSE",
+    "!**/__pycache__/**",
+    "!**/*.py[cod]"
+  ],
+  "keywords": [
+    "agent-skill",
+    "claude-code-plugin",
+    "research",
+    "papers",
+    "pdf",
+    "literature-review",
+    "evidence-synthesis",
+    "codex",
+    "hermes",
+    "openclaw"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "smoke": "node bin/papers-to-skill.js paths"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

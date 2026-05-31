@@ -1,0 +1,22 @@
+{
+  "name": "papers-to-skill-marketplace",
+  "owner": {
+    "name": "luckylykkk"
+  },
+  "metadata": {
+    "description": "Marketplace manifest for installing the papers-to-skill Claude Code plugin.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "papers-to-skill",
+      "description": "Generate citation-grounded domain research expert skills from folders of academic PDFs, BibTeX files, and literature notes.",
+      "category": "research",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/luckylykkk/papers-to-skill.git"
+      },
+      "homepage": "https://github.com/luckylykkk/papers-to-skill"
+    }
+  ]
+}

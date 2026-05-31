@@ -53,6 +53,63 @@ Generated domain skill
 
 The point is not roleplay. The generated skill answers through the concepts, methods, evidence, contradictions, and citation map distilled from the user's own literature folder.
 
+## Real Anonymized Case Study
+
+This is an anonymized version of a real workflow. The original local path is intentionally replaced with a placeholder.
+
+```text
+Step 1: Generate a domain expert skill from a literature folder
+/papers-to-skill Turn <diabetes-pcat-ccta-literature-folder> into a domain research expert skill.
+```
+
+Generated result:
+
+```text
+Generated skill: diabetes-pcat-ccta
+
+Processed corpus:
+- 1059 BibTeX records
+- 861 PDFs
+- about 810 unique papers after PMID / file-ID deduplication
+- 51 duplicate PDF groups detected
+- 52 highly relevant core papers fully extracted
+
+Generated files:
+- SKILL.md
+- papers.md
+- evidence-table.md
+- methods.md
+- concepts.md
+- contradictions.md
+- reading-map.md
+- validation-report.md
+
+Validation:
+- quick_validate.py passed
+- globally installed skill also passed validation
+- citation key consistency check passed
+```
+
+Then the generated skill was used for domain-specific questions:
+
+```text
+/diabetes-pcat-ccta I want to run a regression analysis on coronary calcium score. Help me find references.
+
+/diabetes-pcat-ccta Which papers used Kaplan-Meier curves and ROC prediction models?
+
+/diabetes-pcat-ccta Give me clickable paper paths for the KM + ROC papers.
+```
+
+Example answer behavior:
+
+```text
+For coronary calcium score regression, use log(CACS + 1) for skewed continuous CACS,
+consider CACS > 400 as a binary sensitivity analysis, and adjust for clinical risk factors,
+CAD-RADS, plaque burden, and PCAT/FAI when aligned with the research endpoint.
+
+The answer includes paper-key references from the generated corpus.
+```
+
 ## Architecture
 
 ```mermaid
@@ -286,6 +343,64 @@ git@github.com:luckylykkk/papers-to-skill.git
 ```
 
 其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`/领域研究专家skill` 需要替换为实际生成出来的 skill 名称。
+
+### 真实匿名案例
+
+下面是一次真实使用流程的匿名化版本。原始本地路径已被替换为占位目录，避免在公开 README 中暴露私人路径。
+
+```text
+第一步：基于一个本地文献目录生成领域专家 skill
+/papers-to-skill 帮我把 <diabetes-pcat-ccta-literature-folder> 目录生成相关领域专家skill
+```
+
+生成结果：
+
+```text
+生成的 skill：diabetes-pcat-ccta
+
+处理语料：
+- 扫描到 1059 条 BibTeX 记录
+- 扫描到 861 个 PDF
+- 按 PMID / 文件 ID 去重后约 810 篇
+- 发现 51 组重复 PDF
+- 抽取 52 篇高相关核心文献全文，全部成功
+
+生成文件：
+- SKILL.md
+- papers.md
+- evidence-table.md
+- methods.md
+- concepts.md
+- contradictions.md
+- reading-map.md
+- validation-report.md
+
+验证结果：
+- quick_validate.py 通过
+- 全局安装版本通过验证
+- 引用 key 一致性检查通过
+```
+
+随后可以直接使用生成的领域专家 skill 提问：
+
+```text
+/diabetes-pcat-ccta 比如说我要对钙化积分进行回归分析，帮我找到参考
+
+/diabetes-pcat-ccta 有哪些文章使用了KM曲线和ROC预测模型
+
+/diabetes-pcat-ccta 给出KM + ROC文章的可点击目录
+```
+
+示例回答效果：
+
+```text
+对于钙化积分回归分析，可以把 CACS 作为连续结局、分类结局或预测因子处理。
+连续型 CACS 通常建议使用 log(CACS + 1)；
+敏感性分析可考虑 CACS > 400；
+模型中应结合年龄、性别、BMI、糖尿病相关指标、CAD-RADS、斑块负荷、PCAT/FAI 等变量。
+
+回答会附带来自生成文献库的 paper-key 引用来源。
+```
 
 ### 它会提取什么
 

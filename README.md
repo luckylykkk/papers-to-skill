@@ -1,6 +1,6 @@
-# Papers To Skill
+# Papers to Skill
 
-> Turn your frontier literature folder into a reusable, citation-grounded domain expert skill.<br>
+> Turn your frontier literature folder into a reusable, citation-grounded domain expert skill.
 > 把你的前沿文献文件夹，变成一个可复用、可引用的领域研究专家 Skill。
 
 ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue)
@@ -28,7 +28,7 @@ Install this skill: git@github.com:luckylykkk/papers-to-skill.git
 中文：
 
 ```text
-安装这个 skill：git@github.com:luckylykkk/papers-to-skill.git
+安装这个 Skill：git@github.com:luckylykkk/papers-to-skill.git
 ```
 
 ## Three-Step Use
@@ -205,12 +205,28 @@ Every generated skill should state what it cannot do:
 
 ## 中文说明
 
+### 为什么需要这个工具
+
+通用 AI 的推理能力往往很强，但在前沿学术研究和真实垂直场景里，回答质量常常受限于缺少领域前置知识。问题通常不是模型“不够聪明”，而是它未必掌握你手头这批最新、最相关、最贴近场景的论文。
+
+`papers-to-skill` 的目标是把用户自己的文献目录打包成一个可复用的领域研究专家 Skill。之后再提问时，回答会尽量结合这批文献中的设计、证据、方法、参数和引用来源，而不是只依赖通用训练记忆。
+
+### 适用场景
+
+- 研究想法评估
+- 研究设计参考
+- 参数、阈值和统计方法参考
+- 影像、临床或实验指标的方法学查证
+- 文献证据定位
+- 审稿风险和研究边界检查
+- 带文献来源的专业问答
+
 ### 快速安装
 
-告诉你的 agent：
+告诉你的 Agent：
 
 ```text
-安装这个 skill：git@github.com:luckylykkk/papers-to-skill.git
+安装这个 Skill：git@github.com:luckylykkk/papers-to-skill.git
 ```
 
 ### 三步使用
@@ -224,13 +240,13 @@ Every generated skill should state what it cannot do:
    +-- paper-03.pdf
    ```
 
-2. **使用 `/papers-to-skill` 把该目录生成相关领域专家 skill。**
+2. **使用 `/papers-to-skill` 把该目录生成领域研究专家 Skill。**
 
    ```text
-   /papers-to-skill 帮我把 <your-literature-folder> 目录生成相关领域专家skill
+   /papers-to-skill 基于 <your-literature-folder> 目录生成领域研究专家 Skill
    ```
 
-3. **使用生成的领域专家 skill 进行专业前沿知识问答。**
+3. **使用生成的领域研究专家 Skill 进行专业前沿知识问答。**
 
    ```text
    /<generated-skill-name> 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
@@ -238,20 +254,20 @@ Every generated skill should state what it cannot do:
    /<generated-skill-name> 帮我评估这个研究设计，并给出文献来源
    ```
 
-其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`<generated-skill-name>` 需要替换为实际生成出来的 skill 名称。
+其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`<generated-skill-name>` 需要替换为实际生成出来的 Skill 名称。
 
 ### 真实匿名案例
 
 下面是一次真实使用流程的匿名化版本。原始本地路径已被替换为占位目录，避免在公开 README 中暴露私人路径。
 
 ```text
-/papers-to-skill 帮我把 <diabetes-pcat-ccta-literature-folder> 目录生成相关领域专家skill
+/papers-to-skill 基于 <diabetes-pcat-ccta-literature-folder> 目录生成领域研究专家 Skill
 ```
 
 生成结果：
 
 ```text
-生成的 skill：diabetes-pcat-ccta
+生成的 Skill：diabetes-pcat-ccta
 
 处理语料：
 - 扫描到 1059 条 BibTeX 记录
@@ -276,14 +292,14 @@ Every generated skill should state what it cannot do:
 - 引用 key 一致性检查通过
 ```
 
-随后可以直接使用生成的领域专家 skill 提问：
+随后可以直接使用生成的领域研究专家 Skill 提问：
 
 ```text
 /diabetes-pcat-ccta 比如说我要对钙化积分进行回归分析，帮我找到参考
 
-/diabetes-pcat-ccta 有哪些文章使用了KM曲线和ROC预测模型
+/diabetes-pcat-ccta 有哪些文章使用了 KM 曲线和 ROC 预测模型
 
-/diabetes-pcat-ccta 给出KM + ROC文章的可点击目录
+/diabetes-pcat-ccta 给出 KM + ROC 文章的可点击目录
 ```
 
 示例回答效果：
@@ -297,15 +313,15 @@ Every generated skill should state what it cannot do:
 回答会附带来自生成文献库的 paper-key 引用来源。
 ```
 
-#### 完整问答示例：预后模型文章通常做哪些 Table
+#### 完整问答示例：预后模型文章通常做哪些表格
 
 用户提问：
 
 ```text
-/diabetes-pcat-ccta 这些文章通常做了哪几个table
+/diabetes-pcat-ccta 这些文章通常做了哪几个表格
 ```
 
-生成的领域专家 skill 回答：
+生成的领域研究专家 Skill 回答：
 
 我用 `diabetes-pcat-ccta` 查了这几篇 KM/ROC 预后模型文章。它们通常是 **3-5 个主表 + 若干补充表**。
 
@@ -353,13 +369,13 @@ References:
 
 `papers-to-skill` 不是简单建立一个 RAG 检索库，也不是生成一份一次性的文献综述。
 
-它生成的是一个可复用的 skill：一个浓缩后的领域操作层。这个 skill 会保存证据表、方法、概念、矛盾与边界、阅读地图、验证结果和引用规则。之后你可以反复调用它，回答新的研究问题。
+它生成的是一个可复用的 Skill：一个浓缩后的领域操作层。这个 Skill 会保存证据表、方法、概念、矛盾与边界、阅读地图、验证结果和引用规则。之后你可以反复调用它，回答新的研究问题。
 
 换句话说：
 
 - **RAG** 主要检索相关片段。
 - **普通文献总结** 主要一次性概括论文。
-- **生成的 skill** 会把文献库变成一个可复用、有边界、有引用规则的领域研究助手。
+- **生成的 Skill** 会把文献库变成一个可复用、有边界、有引用规则的领域研究助手。
 
 ### 它会提取什么
 
@@ -369,9 +385,19 @@ References:
 | 研究方法 | 研究设计、数据集、指标、统计模型、算法 |
 | 关键概念 | 定义、分类、假设、概念关系 |
 | 矛盾与边界 | 阴性结果、冲突发现、适用边界 |
-| 应用场景 | 文献如何改变研究决策或 agent 行为 |
+| 应用场景 | 文献如何改变研究决策或 Agent 行为 |
 | 阅读地图 | 后续回答问题时应该查哪篇文献、哪个部分 |
 
 ### 引用规则
 
-生成后的专家 skill 在回答实质性问题时，应该引用 `references/papers.md` 中的文献来源。
+生成后的专家 Skill 在回答实质性问题时，应该引用 `references/papers.md` 中的文献来源。
+
+### 边界说明
+
+每个生成出来的 Skill 都应该明确自己的边界：
+
+- 它只和用户提供的语料一样新。
+- 它不应该编造引用、阈值、样本量或效应量。
+- 它应该区分强证据、弱证据和单篇论文证据。
+- 它不能替代临床、法律或金融建议。
+- 它在回答实质性问题时应给出文献来源。

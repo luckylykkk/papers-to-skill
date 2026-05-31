@@ -1,0 +1,4 @@
+interface:
+  display_name: "Papers to Skill"
+  short_description: "Turn research PDFs into a tested domain expert skill."
+  default_prompt: "Convert these research papers into a grounded domain expert skill:"

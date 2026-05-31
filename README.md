@@ -120,15 +120,15 @@ It combines three patterns:
    +-- paper-03.pdf
    ```
 
-2. **Use this tool to package that folder into a skill.**
+2. **Use the slash command to package that folder into a skill.**
 
-   Start by extracting the paper corpus:
+   In a skill-enabled client, invoke `papers-to-skill` directly and ask it to generate a domain expert skill from your folder:
 
-   ```bash
-   python scripts/extract_papers.py <pdf-or-folder> --out <workdir>
+   ```text
+   /papers-to-skill Turn <your-literature-folder> into a domain research expert skill.
    ```
 
-   Then follow `SKILL.md` to synthesize the extracted evidence into a domain expert skill.
+   The extractor script is an internal implementation detail; the user-facing entrypoint is the slash command.
 
 3. **Use the generated skill for frontier domain Q&A and research tasks.**
 
@@ -149,7 +149,7 @@ Step 1: Install this skill
 git@github.com:luckylykkk/papers-to-skill.git
 
 Step 2: Generate a domain expert skill from a local literature folder
-/papers-to-skill Generate a domain research expert skill from <your-literature-folder>
+/papers-to-skill Turn <your-literature-folder> into a domain research expert skill.
 
 Step 3: Use the generated domain expert skill
 /领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
@@ -250,15 +250,15 @@ Every substantive answer from a generated expert skill should include paper refe
    +-- paper-03.pdf
    ```
 
-2. **使用这个工具把文件夹下的文件打包成 skill。**
+2. **使用 slash-command 把文件夹下的文件打包成 skill。**
 
-   先运行提取脚本：
+   在支持 skill 的客户端中，直接调用 `/papers-to-skill`，让它基于你的文献目录生成领域专家 skill：
 
-   ```bash
-   python scripts/extract_papers.py <pdf-or-folder> --out <workdir>
+   ```text
+   /papers-to-skill 帮我把 <your-literature-folder> 目录生成相关领域专家skill
    ```
 
-   然后按照 `SKILL.md` 中的流程，把提取出来的文献证据综合成一个领域专家 skill。
+   提取脚本是内部实现细节；用户主入口是 slash-command。
 
 3. **使用生成的 skill 进行专业前沿知识问答或其他研究需求。**
 
@@ -279,7 +279,7 @@ Every substantive answer from a generated expert skill should include paper refe
 git@github.com:luckylykkk/papers-to-skill.git
 
 第二步：基于本地文献目录生成领域研究专家 skill
-/papers-to-skill 基于我提供的目录<your-literature-folder>生成领域研究专家skill
+/papers-to-skill 帮我把 <your-literature-folder> 目录生成相关领域专家skill
 
 第三步：使用生成的领域研究专家 skill 进行前沿知识问答
 /领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些

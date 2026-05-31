@@ -1,64 +1,68 @@
 # Papers To Skill
 
-> Turn your frontier literature folder into a citation-grounded domain expert skill.<br>
-> 把你的前沿文献文件夹，变成一个可引用的领域研究助手 Skill。
+> Turn your frontier literature folder into a reusable, citation-grounded domain expert skill.<br>
+> 把你的前沿文献文件夹，变成一个可复用、可引用的领域研究专家 Skill。
 
 ![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-blue)
 ![Citation Grounded](https://img.shields.io/badge/answers-citation--grounded-green)
 ![Local Corpus](https://img.shields.io/badge/knowledge-user--supplied-orange)
 
-`papers-to-skill` converts a folder of academic papers and related research knowledge into a reusable, citation-grounded domain expert skill.
+`papers-to-skill` packages the papers and research materials in a user-provided folder into a reusable expert skill. The generated skill can then answer field-specific research questions with citations from the supplied corpus.
 
-- [English](#english)
-- [中文](#中文)
+- [Quick Install](#quick-install)
+- [Three-Step Use](#three-step-use)
+- [Real Anonymized Case Study](#real-anonymized-case-study)
+- [Not RAG, Not A One-Off Summary](#not-rag-not-a-one-off-summary)
 - [Architecture](#architecture)
 - [Usage Workflow](#usage-workflow)
+- [中文说明](#中文说明)
 
-## Image2 Visual Overview
+## Quick Install
 
-The diagrams below were generated with Image2 to show the skill architecture and the practical usage flow.
-
-![papers-to-skill architecture](assets/papers-to-skill-architecture.png)
-
-![papers-to-skill usage workflow](assets/papers-to-skill-workflow.png)
-
-## Why This Exists
-
-General AI is often strong at reasoning, but weak answers in frontier academic fields are frequently caused by missing domain-specific prior knowledge. The model may not know the newest papers, the latest parameter conventions, the most relevant negative results, or what reviewers in a narrow field currently care about.
-
-`papers-to-skill` is designed to close that gap by letting users bring their own literature corpus. Instead of asking a general model to answer from broad training memory, you first package your field-specific papers into a skill, then use that skill for grounded consultation.
-
-## See It In Action
+Tell your agent:
 
 ```text
-User
-  I want to run a regression analysis on coronary calcium score.
-  Help me find statistical references.
-
-Generated domain skill
-  Use log(CACS + 1) for skewed continuous CACS,
-  and use CACS > 400 as a sensitivity or binary-risk analysis
-  when aligned with the endpoint.
-
-  Evidence:
-  - paper A used CACS as a predictor in a multivariable model.
-  - paper B used CACS > 400 as a high-risk threshold.
-  - paper C compared CACS with inflammatory imaging biomarkers.
-
-  References:
-  - paper-key-a
-  - paper-key-b
-  - paper-key-c
+Install this skill: git@github.com:luckylykkk/papers-to-skill.git
 ```
 
-The point is not roleplay. The generated skill answers through the concepts, methods, evidence, contradictions, and citation map distilled from the user's own literature folder.
+中文：
+
+```text
+安装这个 skill：git@github.com:luckylykkk/papers-to-skill.git
+```
+
+## Three-Step Use
+
+1. **Put the knowledge you want to include into one folder.**
+
+   ```text
+   my-research-corpus/
+   +-- paper-01.pdf
+   +-- paper-02.pdf
+   +-- paper-03.pdf
+   ```
+
+2. **Use `/papers-to-skill` to generate a domain expert skill from that folder.**
+
+   ```text
+   /papers-to-skill Turn <your-literature-folder> into a domain research expert skill.
+   ```
+
+3. **Use the generated expert skill for frontier domain Q&A and research tasks.**
+
+   ```text
+   /<generated-skill-name> What are the hottest research directions in this field, and what could be done next?
+   /<generated-skill-name> Find statistical references for this parameter.
+   /<generated-skill-name> Evaluate this study design and cite supporting papers.
+   ```
+
+Replace `<your-literature-folder>` with your own local folder. Do not put private local paths in public documentation. Replace `<generated-skill-name>` with the actual skill name generated from your corpus.
 
 ## Real Anonymized Case Study
 
 This is an anonymized version of a real workflow. The original local path is intentionally replaced with a placeholder.
 
 ```text
-Step 1: Generate a domain expert skill from a literature folder
 /papers-to-skill Turn <diabetes-pcat-ccta-literature-folder> into a domain research expert skill.
 ```
 
@@ -110,45 +114,25 @@ CAD-RADS, plaque burden, and PCAT/FAI when aligned with the research endpoint.
 The answer includes paper-key references from the generated corpus.
 ```
 
-## Architecture
+## Not RAG, Not A One-Off Summary
 
-```mermaid
-flowchart LR
-    A["User literature folder<br/>PDFs, notes, tables, data"] --> B["Paper extraction<br/>text, metadata, manifest"]
-    B --> C["Evidence synthesis lanes"]
-    C --> C1["Claims"]
-    C --> C2["Methods"]
-    C --> C3["Concepts"]
-    C --> C4["Contradictions"]
-    C --> C5["Applications"]
-    C --> C6["Reading map"]
-    C1 --> D["Validation and scoring"]
-    C2 --> D
-    C3 --> D
-    C4 --> D
-    C5 --> D
-    C6 --> D
-    D --> E["Generated domain expert skill"]
-    E --> F["Citation-grounded research Q&A<br/>study design, statistics, methods, reviewer risks"]
-```
+`papers-to-skill` is not just a RAG index and not just a one-time literature summary.
 
-## Usage Workflow
+It generates a reusable skill: a compact operating layer that captures how the literature should guide future answers. The generated skill includes evidence tables, methods, concepts, contradictions, reading maps, validation notes, and citation rules. You can invoke it repeatedly for new research questions after the corpus has been distilled.
 
-```mermaid
-flowchart TD
-    S1["Step 1<br/>Collect relevant papers and knowledge in one folder"] --> S2["Step 2<br/>Run papers-to-skill to extract, synthesize, and validate"]
-    S2 --> S3["Step 3<br/>Use the generated skill for frontier domain Q&A and research support"]
-    S3 --> S4["Answers include citations from the supplied corpus"]
-    S3 -. "Add new papers later" .-> S1
-```
+In other words:
 
-## English
+- **RAG** retrieves relevant chunks.
+- **A literature summary** describes papers once.
+- **A generated skill** turns the corpus into a reusable domain assistant with rules, boundaries, and citations.
 
-### What It Does
+## Why This Exists
 
-`papers-to-skill` helps users package their own frontier literature corpus into a domain research assistant skill.
+General AI is often strong at reasoning, but weak answers in frontier academic fields are frequently caused by missing domain-specific prior knowledge. The model may not know the newest papers, the latest parameter conventions, the most relevant negative results, or what reviewers in a narrow field currently care about.
 
-The generated skill is intended for later consultation on:
+`papers-to-skill` is designed to close that gap by letting users bring their own literature corpus. Instead of asking a general model to answer from broad training memory, you first package your field-specific papers into a skill, then use that skill for grounded consultation.
+
+## What It Can Help With
 
 - research idea evaluation
 - study design
@@ -158,63 +142,19 @@ The generated skill is intended for later consultation on:
 - reviewer-risk checks
 - domain-specific Q&A with citations
 
-It combines three patterns:
+## Architecture
 
-- **book-to-skill style extraction**: turn papers into structured evidence instead of raw text dumps
-- **nuwa-skill style synthesis**: distill the corpus through multiple evidence lanes
-- **darwin-skill style validation**: score and revise the generated skill before treating it as usable
+The architecture is shown with an Image2-generated diagram:
 
-### Three-Step Quick Start
+![papers-to-skill architecture](assets/papers-to-skill-architecture.png)
 
-1. **Put the knowledge you want to include into one folder.**
+## Usage Workflow
 
-   This folder can contain the papers or related research materials you want the generated skill to use as its evidence base.
+The usage workflow is shown with an Image2-generated diagram:
 
-   ```text
-   my-research-corpus/
-   +-- paper-01.pdf
-   +-- paper-02.pdf
-   +-- paper-03.pdf
-   ```
+![papers-to-skill usage workflow](assets/papers-to-skill-workflow.png)
 
-2. **Use the slash command to package that folder into a skill.**
-
-   In a skill-enabled client, invoke `papers-to-skill` directly and ask it to generate a domain expert skill from your folder:
-
-   ```text
-   /papers-to-skill Turn <your-literature-folder> into a domain research expert skill.
-   ```
-
-   The extractor script is an internal implementation detail; the user-facing entrypoint is the slash command.
-
-3. **Use the generated skill for frontier domain Q&A and research tasks.**
-
-   Example prompts:
-
-   ```text
-   Use <generated-skill-name> to evaluate this research design and cite supporting papers.
-   Use <generated-skill-name> to find statistical references for this parameter.
-   Use <generated-skill-name> to identify reviewer risks in this study idea.
-   ```
-
-### Concrete Command Example
-
-In a skill-enabled client, a complete workflow can look like this:
-
-```text
-Step 1: Install this skill
-git@github.com:luckylykkk/papers-to-skill.git
-
-Step 2: Generate a domain expert skill from a local literature folder
-/papers-to-skill Turn <your-literature-folder> into a domain research expert skill.
-
-Step 3: Use the generated domain expert skill
-/领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
-```
-
-Replace `/领域研究专家skill` with the actual skill name generated from your corpus.
-
-### What Gets Distilled
+## What Gets Distilled
 
 The generated expert skill is built from six evidence lanes:
 
@@ -227,17 +167,7 @@ The generated expert skill is built from six evidence lanes:
 | Applications | How the evidence changes research decisions or agent behavior |
 | Reading map | Where to look when answering future questions |
 
-### Honest Boundaries
-
-Every generated skill should state what it cannot do:
-
-- it is only as current as the supplied corpus
-- it should not invent citations, thresholds, sample sizes, or effect sizes
-- it should distinguish strong evidence from weak or single-paper evidence
-- it should not treat model output as clinical, legal, or financial advice
-- it should cite the source papers for substantive claims
-
-### Output Shape
+## Output Shape
 
 ```text
 <skill-name>/
@@ -259,46 +189,33 @@ Every generated skill should state what it cannot do:
     +-- validation-report.md
 ```
 
-### Citation Rule
+## Citation Rule
 
 Every substantive answer from a generated expert skill should include paper references from `references/papers.md`.
 
-## 中文
+## Honest Boundaries
 
-### 这个工具做什么
+Every generated skill should state what it cannot do:
 
-`papers-to-skill` 可以把一个文件夹中的学术论文和相关研究知识，转换成一个可复用、带文献来源的垂直领域研究助手 skill。
+- it is only as current as the supplied corpus
+- it should not invent citations, thresholds, sample sizes, or effect sizes
+- it should distinguish strong evidence from weak or single-paper evidence
+- it should not treat model output as clinical, legal, or financial advice
+- it should cite the source papers for substantive claims
 
-生成后的 skill 可以用于后续咨询，例如：
+## 中文说明
 
-- 研究想法评估
-- 研究设计
-- 参数选择
-- 统计方法参考
-- 方法学选择
-- 证据查找
-- 审稿风险检查
-- 带文献来源的专业问答
+### 快速安装
 
-它结合了三类能力：
+告诉你的 agent：
 
-- **类似 book-to-skill**：把论文提取成结构化证据，而不是简单堆叠原文
-- **类似 nuwa-skill**：从多个证据通道综合文献
-- **类似 darwin-skill**：在生成后进行验证、评分和修正，确保生成的 skill 可用
+```text
+安装这个 skill：git@github.com:luckylykkk/papers-to-skill.git
+```
 
-### 为什么需要它
-
-在很多真实科研场景中，我们需要的专业知识往往和通用领域知识存在差距。模型训练获得的知识也可能与垂直领域最新文献之间存在时间差和专业差。
-
-当我们直接使用通用型 AI 进行对话时，回答往往不能贴近最前沿的学术研究领域；这并不是模型的智力水平不够，而是它缺乏相关领域的前置知识。
-
-因此，这个工具的目标是把用户自己相关领域的前沿文献打包成一个可复用的研究助手 skill。基于这个研究助手生成的回答，可以结合该领域最新证据、方法和参数参考，给出更真实、更贴近具体场景的建议。
-
-### 三步快速使用
+### 三步使用
 
 1. **把需要纳入的相关知识放在一个文件夹下。**
-
-   这个文件夹可以放入你希望 skill 学习和引用的论文 PDF 或其他相关研究材料。
 
    ```text
    my-research-corpus/
@@ -307,49 +224,27 @@ Every substantive answer from a generated expert skill should include paper refe
    +-- paper-03.pdf
    ```
 
-2. **使用 slash-command 把文件夹下的文件打包成 skill。**
-
-   在支持 skill 的客户端中，直接调用 `/papers-to-skill`，让它基于你的文献目录生成领域专家 skill：
+2. **使用 `/papers-to-skill` 把该目录生成相关领域专家 skill。**
 
    ```text
    /papers-to-skill 帮我把 <your-literature-folder> 目录生成相关领域专家skill
    ```
 
-   提取脚本是内部实现细节；用户主入口是 slash-command。
-
-3. **使用生成的 skill 进行专业前沿知识问答或其他研究需求。**
-
-   示例：
+3. **使用生成的领域专家 skill 进行专业前沿知识问答。**
 
    ```text
-   使用 <generated-skill-name>，帮我评估这个研究设计，并给出文献来源。
-   使用 <generated-skill-name>，帮我查找某个参数或统计方法的参考。
-   使用 <generated-skill-name>，帮我判断这个研究想法可能会被审稿人质疑的地方。
+   /<generated-skill-name> 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
+   /<generated-skill-name> 帮我查找某个参数或统计方法的参考
+   /<generated-skill-name> 帮我评估这个研究设计，并给出文献来源
    ```
 
-### 完整使用示例
-
-如果你的客户端支持 skill 安装和 slash-command 调用，可以按下面三步使用：
-
-```text
-第一步：安装这个 skill
-git@github.com:luckylykkk/papers-to-skill.git
-
-第二步：基于本地文献目录生成领域研究专家 skill
-/papers-to-skill 帮我把 <your-literature-folder> 目录生成相关领域专家skill
-
-第三步：使用生成的领域研究专家 skill 进行前沿知识问答
-/领域研究专家skill 告诉我目前该领域最热门的研究方向和接下来可以做的研究方向有哪些
-```
-
-其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`/领域研究专家skill` 需要替换为实际生成出来的 skill 名称。
+其中 `<your-literature-folder>` 需要替换为你自己的本地文献目录；公开 README 中不要写入真实私人路径。`<generated-skill-name>` 需要替换为实际生成出来的 skill 名称。
 
 ### 真实匿名案例
 
 下面是一次真实使用流程的匿名化版本。原始本地路径已被替换为占位目录，避免在公开 README 中暴露私人路径。
 
 ```text
-第一步：基于一个本地文献目录生成领域专家 skill
 /papers-to-skill 帮我把 <diabetes-pcat-ccta-literature-folder> 目录生成相关领域专家skill
 ```
 
@@ -402,9 +297,19 @@ git@github.com:luckylykkk/papers-to-skill.git
 回答会附带来自生成文献库的 paper-key 引用来源。
 ```
 
-### 它会提取什么
+### 不是 RAG，也不是普通文献总结
 
-生成的领域专家 skill 由六个证据通道构成：
+`papers-to-skill` 不是简单建立一个 RAG 检索库，也不是生成一份一次性的文献综述。
+
+它生成的是一个可复用的 skill：一个浓缩后的领域操作层。这个 skill 会保存证据表、方法、概念、矛盾与边界、阅读地图、验证结果和引用规则。之后你可以反复调用它，回答新的研究问题。
+
+换句话说：
+
+- **RAG** 主要检索相关片段。
+- **普通文献总结** 主要一次性概括论文。
+- **生成的 skill** 会把文献库变成一个可复用、有边界、有引用规则的领域研究助手。
+
+### 它会提取什么
 
 | 通道 | 提取内容 |
 |---|---|
@@ -414,38 +319,6 @@ git@github.com:luckylykkk/papers-to-skill.git
 | 矛盾与边界 | 阴性结果、冲突发现、适用边界 |
 | 应用场景 | 文献如何改变研究决策或 agent 行为 |
 | 阅读地图 | 后续回答问题时应该查哪篇文献、哪个部分 |
-
-### 诚实边界
-
-每个生成的 skill 都应该明确说明自己做不到什么：
-
-- 它的知识更新程度取决于用户提供的文献库
-- 它不能编造引用、阈值、样本量或效应量
-- 它需要区分强证据和单篇论文的弱证据
-- 它不能把模型回答当作临床、法律或金融建议
-- 它在回答实质性问题时必须给出文献来源
-
-### 输出结构
-
-```text
-<skill-name>/
-+-- SKILL.md
-+-- references/
-    +-- research/
-        +-- 01-claims.md
-        +-- 02-methods.md
-        +-- 03-concepts.md
-        +-- 04-contradictions.md
-        +-- 05-applications.md
-        +-- 06-reading-map.md
-    +-- papers.md
-    +-- evidence-table.md
-    +-- concepts.md
-    +-- methods.md
-    +-- contradictions.md
-    +-- reading-map.md
-    +-- validation-report.md
-```
 
 ### 引用规则
 
